@@ -1,6 +1,6 @@
-import { React, ReactDOM, html } from "./deps.js";
-import { PaceCalcCard } from './PaceCalcCard.js'
-import { PacesTable } from './PacesTable.js'
+import { React, ReactDOM, html } from "../deps.js";
+import { PaceCalcCard } from '../components/PaceCalcCard.js'
+import { PacesTable } from '../components/PacesTable.js'
 
 export const PaceCalculator = () => {
   return html`

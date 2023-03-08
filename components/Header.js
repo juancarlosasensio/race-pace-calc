@@ -1,4 +1,4 @@
- import { React, ReactDOM, html } from "./deps.js";
+ import { React, ReactDOM, html } from "../deps.js";
  
 export const Header = () => {
   return html`

@@ -1,6 +1,6 @@
 import { React, ReactDOM, html } from "./deps.js";
-import { Header } from "./Header.js";
-import { PaceCalculator } from "./PaceCalculator.js";
+import { Header } from "./components/Header.js";
+import { PaceCalculator } from "./containers/PaceCalculator.js";
 
 const App = () => {
   return html`
