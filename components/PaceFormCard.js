@@ -1,7 +1,7 @@
 import { React, ReactDOM, html } from "../deps.js";
 import { ToggleDistUnits } from "./ToggleDistUnits.js";
 
-export const PaceFormCard = () => {
+export const PaceFormCard = ({ distUnit, setDistUnit }) => {
     const handleSubmit = (event) => {
     event.preventDefault();
     
@@ -28,12 +28,12 @@ export const PaceFormCard = () => {
       <form onSubmit=${handleSubmit}>
         <div className="row mb-3">
           <div className="col-6">
-            <select className="form-select" aria-label="Minutes select">
+            <select className="form-select" aria-label="Minutes select" id="mins-select">
               ${renderSelectOptions(3, 30, 'min')}
             </select>
           </div>
           <div className="col-6">
-            <select className="form-select" aria-label="Seconds select">
+            <select className="form-select" aria-label="Seconds select" id="secs-select">
               ${renderSelectOptions(0, 59, 'sec')}
             </select>
           </div>
@@ -42,7 +42,10 @@ export const PaceFormCard = () => {
           <button type="submit" className="btn btn-primary w-100">Set Pace</button>
         </div>
       </form>
-      <${ToggleDistUnits} />
+      <${ToggleDistUnits} 
+        distUnit=${distUnit} 
+        setDistUnit=${setDistUnit} 
+      />
     </article>
   `
 }
