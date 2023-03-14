@@ -1,11 +1,18 @@
 import { React, ReactDOM, html } from "../deps.js";
 import { ToggleDistUnits } from "./ToggleDistUnits.js";
 
-export const PaceFormCard = ({ distUnit, setDistUnit }) => {
+export const PaceFormCard = ({ distUnit, setDistUnit, setPace }) => {
+  
   const handleSubmit = (event) => {
     event.preventDefault();
-    
-    console.log(event.target)
+    const paceUnits = [];
+    Array.from(event.target.querySelectorAll("select")).forEach(ele => {
+      const {value} = ele;
+      const [scalar,] = value.split(' ');
+      paceUnits.push(parseInt(scalar))
+    })
+
+    setPace(paceUnits)
   }
 
   const renderSelectOptions = (loLimit, hiLimit, constant = '') => {
