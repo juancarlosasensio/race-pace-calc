@@ -1,9 +1,86 @@
 import { React, ReactDOM, html } from "../deps.js";
 
-export const PacesTable = () => {
+export const PacesTable = ({ pace, distUnit }) => {
+  const localPace = "04:30";
+
+  const POPULAR_RACE_DIST_IN_MILES = [
+    {name: '5k', dist: 3.10686}, 
+    {name: '10k', dist: 6.21371}, 
+    {name: '1/2 marathon' ,dist: 13.1}, 
+    {name: 'marathon' ,dist: 26.2}, 
+    {name: '50k', dist: 31.0686}
+  ]
+
+  /*
+    If one of the popular race distances is between i and i + 1, insert it there. 
+    Otherwise, move on
+  */
+
+  const renderDistListItems = () => {
+    let indexPopRaceDist = 0;
+    const output = [];
+    for (let i = 1; i <= 30; i++) {
+      const currSpecialRace = POPULAR_RACE_DIST_IN_MILES[indexPopRaceDist];
+
+      if ((i < currSpecialRace.dist && currSpecialRace.dist < i + 1) && (indexPopRaceDist < POPULAR_RACE_DIST_IN_MILES.length - 1)) {
+        output.push(html`<li key=${currSpecialRace.dist}>${currSpecialRace.name}</li>`);
+        indexPopRaceDist++
+      } else {
+        output.push(html`<li key=${i}>${i}</li>`)
+      }
+    }
+    return output
+  }
+ 
+  const renderTableBody = () => {
+    let indexPopRaceDist = 0;
+    const output = [];
+
+    for (let i = 1; i <= 30; i++) {
+      const currSpecialRace = POPULAR_RACE_DIST_IN_MILES[indexPopRaceDist];
+      output.push(html`
+          <tr className="" key=${i}>
+            <td className="text-start">
+            ${i}
+            </td>
+            <td className="text-end">
+            ${localPace}
+            </td>
+          </tr>
+        `)
+      if ((i < currSpecialRace.dist && currSpecialRace.dist < i + 1) && (indexPopRaceDist < POPULAR_RACE_DIST_IN_MILES.length - 1)) {
+        output.push(html`
+          <tr className="bg-dark fw-bold text-white" key=${currSpecialRace.dist}>
+            <td className="text-start">
+            ${currSpecialRace.name}
+            </td>
+            <td className="text-end">
+            ${localPace}
+            </td>
+          </tr>
+        `)
+        indexPopRaceDist++
+      }
+    }
+    return output;  
+  }
+
   return html`
     <div className="col-md-5 text-center">
-       Hello
+       <table className="table">
+        <thead>
+          <tr>
+            <th className="text-start">Dist (${distUnit})</th>
+            <th className="text-end">${localPace}<abbr title="minutes per ${distUnit}">${distUnit === 'miles' ? '/mi' : '/km'}</abbr></th>
+          </tr>
+        </thead>
+        <tbody>
+          ${renderTableBody()}
+        </tbody>
+       </table>
+       <!-- <ul>
+        ${renderDistListItems()}
+       </ul> -->
     </div>
   `
 }

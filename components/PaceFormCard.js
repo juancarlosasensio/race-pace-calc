@@ -2,7 +2,7 @@ import { React, ReactDOM, html } from "../deps.js";
 import { ToggleDistUnits } from "./ToggleDistUnits.js";
 
 export const PaceFormCard = ({ distUnit, setDistUnit }) => {
-    const handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     
     console.log(event.target)
