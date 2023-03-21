@@ -5,9 +5,56 @@ export const PacesTable = ({ pace, distUnit }) => {
   console.log('from PacesTable', pace)
   const minsDisplay = pace[0] < 10 ? `0${pace[0]}` : `${pace[0]}`;
   const secsDisplay = pace[1] < 10 ? `0${pace[1]}` : `${pace[1]}`;
-  const paceToDisplay = `${minsDisplay}:${secsDisplay}`
+  const paceToDisplay = `${minsDisplay}:${secsDisplay}`;
   
   const localPace = "04:30";
+
+  // Returns an array with [hours, minutes, seconds]
+  const calcTimeForDistAndPace = (miles, pace) => {
+    let seconds = miles * pace[1];
+    let minutes = miles * pace[0];
+    let hours = 0; 
+    while (seconds > 59) {
+      if (seconds == 60) {
+        minutes++;
+        seconds = 0;
+        break;
+      } else if ((seconds - 60 > 0)) {
+        seconds -= 60;
+        minutes++;
+      }
+    }
+
+    while (minutes > 59) {
+      if (minutes == 60) {
+        hours++;
+        minutes = 0;
+        break;
+      } else if ((minutes - 60 > 0)) {
+        minutes -= 60;
+        hours++
+      }
+    }
+
+    return [hours, minutes, seconds]
+  }
+
+  const displayTotalTime = (timeArray) => {
+    const [hours, minutes, seconds] = timeArray;
+    const minsDisplay = minutes < 10 ? `0${minutes}` : `${minutes}`;
+    const secsDisplay = seconds < 10 ? `0${seconds}` : `${seconds}`;
+    
+    let timeDisplayStr = '';
+    if (hours < 1) {
+      timeDisplayStr = `${minutes} : ${seconds}`
+      return `${minsDisplay}:${secsDisplay}`;
+    } else {
+      const hoursToDisplay = hours < 10 ? `0${hours}` : `${hours}`;
+      return `${hoursToDisplay}:${minsDisplay}:${secsDisplay}`;
+    }
+  }
+
+  //TODO: display times for distances dynamically based on current pace
   /*
     If one of the popular race distances is between i and i + 1, insert it there. 
     Otherwise, move on
@@ -24,7 +71,7 @@ export const PacesTable = ({ pace, distUnit }) => {
             ${i}
             </td>
             <td className="text-end">
-            ${localPace}
+            ${displayTotalTime(calcTimeForDistAndPace(i, pace))}
             </td>
           </tr>
         `)
@@ -35,7 +82,7 @@ export const PacesTable = ({ pace, distUnit }) => {
             ${currSpecialRace.name}
             </td>
             <td className="text-end">
-            ${localPace}
+            ${displayTotalTime(calcTimeForDistAndPace(currSpecialRace.dist, pace))}
             </td>
           </tr>
         `)
