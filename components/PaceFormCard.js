@@ -1,7 +1,7 @@
 import { React, ReactDOM, html } from "../deps.js";
 import { ToggleDistUnits } from "./ToggleDistUnits.js";
 
-export const PaceFormCard = ({ distUnit, setDistUnit, setPace }) => {
+export const PaceFormCard = ({ distUnit, setDistUnit, setPace, pace }) => {
   
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -11,20 +11,21 @@ export const PaceFormCard = ({ distUnit, setDistUnit, setPace }) => {
       const [scalar,] = value.split(' ');
       paceUnits.push(parseInt(scalar))
     })
-
     setPace(paceUnits)
   }
 
-  const renderSelectOptions = (loLimit, hiLimit, constant = '') => {
-    const output = [];
-    for (let i = loLimit; i <= hiLimit; i++) {
-      const val = `${i} ${constant}`
-      if (i === loLimit) {
-        output.push(html`<option key=${val} defaultValue=${val}>${val}</option>`);
-      } else {
-        output.push(html`<option key=${val} value=${val}>${val}</option>`);
-      }
+  const renderSelectOptions = (loLimit, hiLimit, timeUnit = '') => {
+    const output = []    
+    if (timeUnit == 'min') {
+        output.push(html`<option key=${'adfadfad'} defaultValue=${pace[0]}>${pace[0]}min</option>`);
+      } else if (timeUnit == 'sec') {
+        output.push(html`<option key=${'addardardha'} defaultValue=${pace[1]}>${pace[1]}sec</option>`);  
     }
+    
+    for (let i = loLimit; i <= hiLimit; i++) {
+      const val = `${i} ${timeUnit}`
+        output.push(html`<option key=${val} value=${val}>${val}</option>`);
+      } 
 
     return output;
   }
