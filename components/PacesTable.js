@@ -7,13 +7,24 @@ export const PacesTable = ({ pace, distUnit }) => {
   const secsDisplay = pace[1] < 10 ? `0${pace[1]}` : `${pace[1]}`;
   const paceToDisplay = `${minsDisplay}:${secsDisplay}`;
   
-  const localPace = "04:30";
-
+  function isInt(n) {
+    return n % 1 === 0;
+  }
   // Returns an array with [hours, minutes, seconds]
   const calcTimeForDistAndPace = (miles, pace) => {
-    let seconds = miles * pace[1];
-    let minutes = miles * pace[0];
-    let hours = 0; 
+    let seconds = miles.toFixed(2) * pace[1];
+    let minutes = miles.toFixed(2) * pace[0];
+    let hours = 0;
+    
+    if (!isInt(seconds)) {
+      seconds = Math.floor(seconds);
+    }
+    if (!isInt(minutes)) {
+      const decimals = (minutes % 1).toFixed(1);
+      seconds += decimals * 60;
+      minutes = Math.floor(minutes);
+    }
+
     while (seconds > 59) {
       if (seconds == 60) {
         minutes++;
@@ -54,7 +65,6 @@ export const PacesTable = ({ pace, distUnit }) => {
     }
   }
 
-  //TODO: display times for distances dynamically based on current pace
   /*
     If one of the popular race distances is between i and i + 1, insert it there. 
     Otherwise, move on
@@ -99,7 +109,7 @@ export const PacesTable = ({ pace, distUnit }) => {
         <thead>
           <tr>
             <th className="text-start">Dist (${distUnit})</th>
-            <th className="text-end">${localPace}<abbr title="minutes per ${distUnit}">${distUnit === 'miles' ? '/mi' : '/km'}</abbr></th>
+            <th className="text-end">${pace}<abbr title="minutes per ${distUnit}">${distUnit === 'miles' ? '/mi' : '/km'}</abbr></th>
           </tr>
         </thead>
         <tbody>
