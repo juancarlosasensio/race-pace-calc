@@ -2,7 +2,6 @@ import { React, ReactDOM, html } from "../deps.js";
 import { POPULAR_RACE_DIST_IN_MILES } from "../constants.js";
 
 export const PacesTable = ({ pace, distUnit }) => {
-  console.log('from PacesTable', pace)
   const minsDisplay = pace[0] < 10 ? `0${pace[0]}` : `${pace[0]}`;
   const secsDisplay = pace[1] < 10 ? `0${pace[1]}` : `${pace[1]}`;
   const paceToDisplay = `${minsDisplay}:${secsDisplay}`;
@@ -104,12 +103,11 @@ export const PacesTable = ({ pace, distUnit }) => {
 
   return html`
     <div className="col-md-5 text-center">
-      <p>${paceToDisplay}</p>
        <table className="table">
         <thead>
           <tr>
             <th className="text-start">Dist (${distUnit})</th>
-            <th className="text-end">${pace}<abbr title="minutes per ${distUnit}">${distUnit === 'miles' ? '/mi' : '/km'}</abbr></th>
+            <th className="text-end">${paceToDisplay}<abbr title="minutes per ${distUnit}">${distUnit === 'miles' ? '/mi' : '/km'}</abbr></th>
           </tr>
         </thead>
         <tbody>
