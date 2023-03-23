@@ -9,6 +9,33 @@ export const PacesTable = ({ pace, distUnit }) => {
   function isInt(n) {
     return n % 1 === 0;
   }
+
+  function toMinsPerKm(paceInMinsPerMile) {
+    // paceInMinsPerMile is an array
+    // if it takes 7:00 mins to cover one mile, how many minutes would it take to cover one kilometer at that same rate?
+    // 1 mile = 1.609344 kilometers
+    // 1 kilometer = 0.621371192 miles
+    let [minutes, seconds] = paceInMinsPerMile;
+
+    if (minutes !== 0) { minutes = (paceInMinsPerMile[0] * 0.621371192).toFixed(2) };
+    if (seconds !== 0) { seconds = (paceInMinsPerMile[1] * 0.621371192).toFixed(2) };
+
+    if (!isInt(minutes)) {
+      const decimals = Number((minutes % 1).toFixed(1));
+      // Why is decimals sometimes a string, sometimes a number?
+      console.log(typeof decimals);
+
+      seconds += decimals * 60;
+      
+      minutes = Math.floor(minutes);
+      seconds = Math.floor(seconds)
+    }
+
+    return [minutes, seconds]
+  }
+
+  console.log(toMinsPerKm(pace));
+
   // Returns an array with [hours, minutes, seconds]
   const calcTimeForDistAndPace = (miles, pace) => {
     let seconds = miles.toFixed(2) * pace[1];
@@ -54,9 +81,7 @@ export const PacesTable = ({ pace, distUnit }) => {
     const minsDisplay = minutes < 10 ? `0${minutes}` : `${minutes}`;
     const secsDisplay = seconds < 10 ? `0${seconds}` : `${seconds}`;
     
-    let timeDisplayStr = '';
     if (hours < 1) {
-      timeDisplayStr = `${minutes} : ${seconds}`
       return `${minsDisplay}:${secsDisplay}`;
     } else {
       const hoursToDisplay = hours < 10 ? `0${hours}` : `${hours}`;
