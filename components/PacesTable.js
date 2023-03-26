@@ -5,7 +5,8 @@ import {
   isInt, 
   displayPace, 
   displayTotalTime, 
-  calcTimeForDistAndPace
+  calcTimeForDistAndPace,
+  toMinsPerMile
 } from "../utils/pace.js";
 
 const PacesTable = ({ pace, distUnit }) => {
@@ -82,6 +83,8 @@ const PacesTable = ({ pace, distUnit }) => {
     return output;  
   }
 
+  const convertedPace = distUnit === 'miles' ? toMinsPerKm(pace) : toMinsPerMile(pace)
+
   return html`
     <div className="col-md-7 text-center">
        <table className="table">
@@ -92,7 +95,7 @@ const PacesTable = ({ pace, distUnit }) => {
               className="text-end">
                 ${displayPace(pace)}
                 <abbr title="minutes per ${distUnit}">${distUnit === 'miles' ? '/mi' : '/km'}</abbr>
-                <!-- (${displayPace(toMinsPerKm(pace))}/km) -->
+                (${displayPace(convertedPace)}${distUnit === 'miles' ? '/km' : '/mi'})
             </th>
           </tr>
         </thead>
