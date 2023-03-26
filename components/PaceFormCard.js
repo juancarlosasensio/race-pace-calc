@@ -7,9 +7,9 @@ export const PaceFormCard = ({ distUnit, setDistUnit, setPace, pace }) => {
     event.preventDefault();
     const paceUnits = [];
     Array.from(event.target.querySelectorAll("select")).forEach(ele => {
-      const {value} = ele;
+      const { value } = ele;
       const [scalar,] = value.split(' ');
-      paceUnits.push(parseInt(scalar))
+      paceUnits.push(parseInt(scalar));
     })
     setPace(paceUnits)
   }
@@ -32,7 +32,7 @@ export const PaceFormCard = ({ distUnit, setDistUnit, setPace, pace }) => {
 
   return html`
     <article 
-      className="col-md-5 shadow p-5 mx-3 mb-4 rounded bg-white d-flex flex-column">
+      className="col-md-3 shadow p-5 mx-3 mb-4 rounded bg-white d-flex flex-column">
       <form onSubmit=${handleSubmit}>
         <div className="row mb-3">
           <div className="col-6">

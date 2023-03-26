@@ -1,8 +1,8 @@
-import { React, ReactDOM, html } from "../deps.js";
+import { React, ReactDOM, PropTypes, html } from "../deps.js";
 import { POPULAR_RACE_DIST_IN_MILES } from "../constants.js";
 import { toMinsPerKm, isInt, displayPace, displayTotalTime} from "../utils/pace.js";
 
-export const PacesTable = ({ pace, distUnit }) => {
+const PacesTable = ({ pace, distUnit }) => {
   toMinsPerKm(pace)
 
   // Returns an array with [hours, minutes, seconds]
@@ -83,7 +83,7 @@ export const PacesTable = ({ pace, distUnit }) => {
   }
 
   return html`
-    <div className="col-md-5 text-center">
+    <div className="col-md-7 text-center">
        <table className="table">
         <thead>
           <tr>
@@ -102,3 +102,9 @@ export const PacesTable = ({ pace, distUnit }) => {
     </div>
   `
 }
+
+PacesTable.propTypes = {
+  pace: PropTypes.arrayOf(PropTypes.number),
+};
+
+export default PacesTable;

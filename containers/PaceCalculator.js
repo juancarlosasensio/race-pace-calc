@@ -1,6 +1,6 @@
 import { React, ReactDOM, html } from "../deps.js";
 import { PaceFormCard } from '../components/PaceFormCard.js'
-import { PacesTable } from '../components/PacesTable.js'
+import PacesTable from '../components/PacesTable.js'
 
 export const PaceCalculator = () => {
   const [pace, setPace] = React.useState([7, 0]);
