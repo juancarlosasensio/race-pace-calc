@@ -7,6 +7,7 @@ const PacesTable = ({ pace, distUnit }) => {
 
   // Returns an array with [hours, minutes, seconds]
   const calcTimeForDistAndPace = (dist, pace) => {
+    console.log('logging pace from calcTimeForDistAndPace fn', pace);
     let seconds = dist.toFixed(2) * pace[1];
     let minutes = dist.toFixed(2) * pace[0];
     let hours = 0;

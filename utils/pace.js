@@ -19,13 +19,15 @@ export function toMinsPerKm(paceInMinsPerMile) {
 
     // If minsFraction is a string, can we rely on type coercion here?
     seconds += minsFraction * 60;
-
+ 
     minutes = Math.floor(minutes);
-    seconds = Math.floor(seconds)
+    seconds = Math.floor(seconds);
+    
+    if (seconds === 60) { 
+      seconds = 0;
+      minutes++; 
+    };
   }
-
-  console.log(minutes, seconds)
-
   // Do we need to worry about hours?
   return [minutes, seconds]
 }
@@ -50,5 +52,4 @@ export function displayPace(pace) {
 
   return paceToDisplay;
 }
-
 // create func toMinsPerMile
