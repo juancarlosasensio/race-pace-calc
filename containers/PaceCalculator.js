@@ -8,7 +8,7 @@ export const PaceCalculator = () => {
 
   return html`
     <section className="container">
-      <div className="row justify-content-around">
+      <div className="row justify-content-center">
         <${PaceFormCard} 
           pace=${pace} 
           setPace=${setPace}

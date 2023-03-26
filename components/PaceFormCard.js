@@ -32,7 +32,7 @@ export const PaceFormCard = ({ distUnit, setDistUnit, setPace, pace }) => {
 
   return html`
     <article 
-      className="col-md-3 shadow p-5 mx-3 mb-4 rounded bg-white d-flex flex-column">
+      className="col-md-3 shadow p-5 mx-3 mb-4 rounded bg-white d-flex flex-column align-self-start">
       <form onSubmit=${handleSubmit}>
         <div className="row mb-3">
           <div className="col-6">
