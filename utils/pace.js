@@ -7,26 +7,30 @@ export function toMinsPerKm(paceInMinsPerMile) {
   // 1 kilometer = 0.621371192 miles
   let [minutes, seconds] = paceInMinsPerMile;
 
-  console.log('logging pace from fn', paceInMinsPerMile)
-
-  if (minutes !== 0) { minutes = (paceInMinsPerMile[0] * 0.621371192).toFixed(2) };
-  if (seconds !== 0) { seconds = (paceInMinsPerMile[1] * 0.621371192).toFixed(2) };
+  if (minutes !== 0) { minutes = (paceInMinsPerMile[0] * 0.621371192) };
+  if (seconds !== 0) { seconds = (paceInMinsPerMile[1] * 0.621371192) };
 
   if (!isInt(minutes)) {
     const minsFraction = Number((minutes % 1).toFixed(1));
     // Why is minsFraction sometimes a string, sometimes a number?
-    console.log(typeof minsFraction);
+    console.log('logging minsFraction from toMinsPerKm fn', typeof minsFraction, minsFraction);
 
     // If minsFraction is a string, can we rely on type coercion here?
     seconds += minsFraction * 60;
  
     minutes = Math.floor(minutes);
     seconds = Math.floor(seconds);
-    
-    if (seconds === 60) { 
-      seconds = 0;
-      minutes++; 
-    };
+
+    while (seconds > 59) {
+      if (seconds == 60) {
+        minutes++;
+        seconds = 0;
+        break;
+      } else if ((seconds - 60 > 0)) {
+        seconds -= 60;
+        minutes++;
+      }
+    }
   }
   // Do we need to worry about hours?
   return [minutes, seconds]
