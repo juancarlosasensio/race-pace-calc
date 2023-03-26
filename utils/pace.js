@@ -56,4 +56,44 @@ export function displayPace(pace) {
 
   return paceToDisplay;
 }
+
+// Returns an array with [hours, minutes, seconds]
+export function calcTimeForDistAndPace(dist, pace) {
+    let seconds = dist.toFixed(2) * pace[1];
+    let minutes = dist.toFixed(2) * pace[0];
+    let hours = 0;
+    
+    if (!isInt(seconds)) {
+      seconds = Math.floor(seconds);
+    }
+    if (!isInt(minutes)) {
+      const decimals = (minutes % 1).toFixed(1);
+      seconds += decimals * 60;
+      minutes = Math.floor(minutes);
+    }
+
+    while (seconds > 59) {
+      if (seconds == 60) {
+        minutes++;
+        seconds = 0;
+        break;
+      } else if ((seconds - 60 > 0)) {
+        seconds -= 60;
+        minutes++;
+      }
+    }
+
+    while (minutes > 59) {
+      if (minutes == 60) {
+        hours++;
+        minutes = 0;
+        break;
+      } else if ((minutes - 60 > 0)) {
+        minutes -= 60;
+        hours++
+      }
+    }
+
+    return [hours, minutes, seconds]
+  }
 // create func toMinsPerMile
