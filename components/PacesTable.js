@@ -1,8 +1,7 @@
 import { React, ReactDOM, PropTypes, html } from "../deps.js";
 import { POPULAR_RACE_DISTANCES } from "../constants.js";
 import { 
-  toMinsPerKm, 
-  isInt, 
+  toMinsPerKm,
   displayPace, 
   displayTotalTime, 
   calcTimeForDistAndPace,
@@ -17,10 +16,25 @@ const PacesTable = ({ pace, distUnit }) => {
   const renderTableBody = () => {
     let raceIndex = 0;
     let distanceLimit = 31;
-    const output = [];
+    const tableBodyHTML = [];
 
     if (distUnit === 'kms') {
       distanceLimit = 50;
+    }
+
+    const buildRowMarkup = (dist, pace, name = "") => {
+      let rowStyles;
+      if (name) { rowStyles = "bg-dark fw-bold text-white" }
+      return html`
+            <tr className=${rowStyles} key=${dist}>
+              <td className="text-start">
+              ${name ? name : dist}
+              </td>
+              <td className="text-end">
+              ${displayTotalTime(calcTimeForDistAndPace(dist, pace))}
+              </td>
+            </tr>
+          `
     }
 
     for (let dist = 1; dist <= distanceLimit; dist++) {
@@ -30,60 +44,24 @@ const PacesTable = ({ pace, distUnit }) => {
 
       if (distUnit === 'kms') {
         if (dist === specialRaceDist) {
-          output.push(html`
-            <tr className="bg-dark fw-bold text-white" key=${specialRaceDist}>
-              <td className="text-start">
-              ${specialRaceName}
-              </td>
-              <td className="text-end">
-              ${displayTotalTime(calcTimeForDistAndPace(specialRaceDist, pace))}
-              </td>
-            </tr>
-          `)
+          tableBodyHTML.push(buildRowMarkup(specialRaceDist, pace, specialRaceName));
           raceIndex++;
         } else {
-          output.push(html`
-              <tr className="" key=${dist}>
-                <td className="text-start">
-                ${dist}
-                </td>
-                <td className="text-end">
-                ${displayTotalTime(calcTimeForDistAndPace(dist, pace))}
-                </td>
-              </tr>
-          `)
+          tableBodyHTML.push(buildRowMarkup(dist, pace));
         }
       } else if (distUnit === 'miles') {
-        output.push(html`
-          <tr className="" key=${dist}>
-            <td className="text-start">
-            ${dist}
-            </td>
-            <td className="text-end">
-            ${displayTotalTime(calcTimeForDistAndPace(dist, pace))}
-            </td>
-          </tr>
-        `)
+        tableBodyHTML.push(buildRowMarkup(dist, pace));
 
         if ((dist < specialRaceDist && specialRaceDist < dist + 1) && (raceIndex < POPULAR_RACE_DISTANCES.length)) {
-          output.push(html`
-            <tr className="bg-dark fw-bold text-white" key=${specialRaceDist}>
-              <td className="text-start">
-              ${specialRaceName}
-              </td>
-              <td className="text-end">
-              ${displayTotalTime(calcTimeForDistAndPace(specialRaceDist, pace))}
-              </td>
-            </tr>
-          `)
+          tableBodyHTML.push(buildRowMarkup(specialRaceDist, pace, specialRaceName));
           raceIndex++
         }
       }
     }
-    return output;  
+    return tableBodyHTML;  
   }
 
-  const convertedPace = distUnit === 'miles' ? toMinsPerKm(pace) : toMinsPerMile(pace)
+  const convertedPace = distUnit === 'miles' ? toMinsPerKm(pace) : toMinsPerMile(pace);
 
   return html`
     <div className="col-md-7 text-center">
