@@ -1,8 +1,7 @@
 import { React, ReactDOM, PropTypes, html } from "../deps.js";
 import { POPULAR_RACE_DISTANCES } from "../constants.js";
 import { 
-  toMinsPerKm, 
-  isInt, 
+  toMinsPerKm,
   displayPace, 
   displayTotalTime, 
   calcTimeForDistAndPace,
